@@ -1,0 +1,23 @@
+{
+    "name": "ognestraz/laravel-auth-admin",
+    "description": "The Auth Admin Module for Laravel Framework.",
+    "keywords": ["framework", "laravel", "lumen"],
+    "authors": [
+        {
+            "name": "ognestraz",
+            "email": "ognestraz@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ognestraz\\Auth\\": "src/app/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
