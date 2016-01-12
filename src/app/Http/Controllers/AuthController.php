@@ -1,26 +1,16 @@
-<?php
+<?php namespace Ognestraz\Auth\Http\Controllers;
 
-namespace Ognestraz\Auth\Http\Controllers;
-
-use Admin\User;
-use Validator;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 
-class AuthController extends Illuminate\Routing\Controller
+class AuthController extends \Illuminate\Routing\Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthenticatesUsers, ThrottlesLogins;
 
     /**
      * Where to redirect users after login / registration.
@@ -39,34 +29,27 @@ class AuthController extends Illuminate\Routing\Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
-
+    
     /**
-     * Get a validator for an incoming registration request.
+     * Show the application login form.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return \Illuminate\Http\Response
      */
-    protected function validator(array $data)
+    public function showLoginForm()
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        return view('auth-admin::login');
     }
-
+    
     /**
-     * Create a new user instance after a valid registration.
+     * Get the needed authorization credentials from the request.
      *
-     * @param  array  $data
-     * @return User
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
      */
-    protected function create(array $data)
+    protected function getCredentials(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        return array_merge($request->only($this->loginUsername(), 'password'), [
+            'admin' => 1
         ]);
-    }
+    }    
 }

@@ -1,5 +1,4 @@
-<?php
-namespace Ognestraz\Auth\Providers;
+<?php namespace Ognestraz\Auth\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +15,18 @@ class AuthServiceProvider extends ServiceProvider
             require __DIR__.'/../Http/routes.php';
         }
         
+        $pathViews = __DIR__.'/../../resources/views';
+        $packageName = 'auth-admin';
+        $this->loadViewsFrom($pathViews, $packageName);
+        
+        $pathPublicCss = __DIR__.'/../../public/css/' . $packageName . '.css';
+        $pathUnitTest = __DIR__.'/../../tests';
+        
+        $this->publishes([
+            $pathViews => base_path('resources/views/vendor/' . $packageName),
+            $pathPublicCss => base_path('public/css/' . $packageName . '.css'),
+            $pathUnitTest => base_path('tests/vendor')
+        ]);
     }
 
     /**

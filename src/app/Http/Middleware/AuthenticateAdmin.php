@@ -1,4 +1,4 @@
-<?php namespace Admin\Http\Middleware;
+<?php namespace Ognestraz\Auth\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -32,14 +32,9 @@ class AuthenticateAdmin {
      */
     public function handle($request, Closure $next)
     {
-
         $user = $this->auth->user();
-
-        if ($user) {
-            if ($user->role_id == 1) {
-                return $next($request);
-            }
-            return redirect()->to('/');
+        if ($user && $user->admin) {
+            return $next($request);
         } 
 
         if ($request->ajax()) {
