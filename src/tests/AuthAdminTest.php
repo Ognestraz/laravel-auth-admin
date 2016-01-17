@@ -15,6 +15,14 @@ class AuthAdminTest extends TestCase
         $this->visit('/login')
             ->seeStatusCode(200)
             ->see('Login');
+    }
+    
+    public function testGuestGetLogout()
+    {
+        $this->visit('/logout')
+            ->seePageIs('/login')
+            ->seeStatusCode(200)
+            ->see('Login');
     }    
 
     public function testAdminAuthLogin()
@@ -25,14 +33,17 @@ class AuthAdminTest extends TestCase
             ->press('Login')
                 ->seePageIs('/admin')
                 ->seeStatusCode(200)
-                ->click('Logout')
-                    ->seePageIs('/login')
+                    ->visit('/login')
+                    ->seePageIs('/admin')
                     ->seeStatusCode(200)
-                    ->see('Login')    
-                        ->visit('/admin')
-                        ->seePageIs('/login')
-                        ->seeStatusCode(200)
-                        ->see('Login');
+                        ->click('Logout')
+                            ->seePageIs('/login')
+                            ->seeStatusCode(200)
+                            ->see('Login')    
+                                ->visit('/admin')
+                                ->seePageIs('/login')
+                                ->seeStatusCode(200)
+                                ->see('Login');
     }
     
     public function testNotAdminAuthLoginFail()
@@ -43,20 +54,8 @@ class AuthAdminTest extends TestCase
             ->press('Login')
                 ->seePageIs('/login')
                 ->seeStatusCode(200)
-                ->see('Login');
-    }    
-    
-    public function testAuthLoginFail()
-    {
-        $this->visit('/login')
-            ->type('admin2@mail.ru', 'email')
-            ->type('admin', 'password')
-            ->press('Login')
-                ->seePageIs('/login')
-                ->seeStatusCode(200)
-                ->see('Login')
                 ->see('These credentials do not match our records');
-    }
+    }    
     
     public function testAuthLoginEmpty()
     {
@@ -94,6 +93,17 @@ class AuthAdminTest extends TestCase
                 ->see('The email field is required')
                 ->see('The password field is required');
     }
+    
+    public function testAuthLoginFail()
+    {
+        $this->visit('/login')
+            ->type('admin2@mail.ru', 'email')
+            ->type('admin', 'password')
+            ->press('Login')
+                ->seePageIs('/login')
+                ->seeStatusCode(200)
+                ->see('These credentials do not match our records');
+    }    
     
     public function testAuthPasswordFail()
     {
