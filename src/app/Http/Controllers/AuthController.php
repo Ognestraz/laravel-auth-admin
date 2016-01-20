@@ -1,4 +1,4 @@
-<?php namespace Ognestraz\Auth\Http\Controllers;
+<?php namespace Ognestraz\Admin\Auth\Http\Controllers;
 
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;

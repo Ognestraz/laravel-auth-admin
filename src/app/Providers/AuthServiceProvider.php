@@ -1,4 +1,4 @@
-<?php namespace Ognestraz\Auth\Providers;
+<?php namespace Ognestraz\Admin\Auth\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

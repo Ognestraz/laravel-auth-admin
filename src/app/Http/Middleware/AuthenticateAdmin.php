@@ -1,4 +1,4 @@
-<?php namespace Ognestraz\Auth\Http\Middleware;
+<?php namespace Ognestraz\Admin\Auth\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

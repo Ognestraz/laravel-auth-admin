@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ognestraz\\Auth\\": "src/app/"
+            "Ognestraz\\Admin\\Auth\\": "src/app/"
         }
     },
     "config": {
